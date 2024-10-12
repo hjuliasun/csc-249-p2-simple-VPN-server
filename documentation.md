@@ -2,12 +2,18 @@
 # Overview of Application
 This project facilitates message communication between a **malicious** and **friendly** client and VPN server to a destination server. The malicious client performs two types of cyber attacks on the VPN server: DDoS (Distributed Denial-of-Service) and TunnelVision. TunnelVision attacks bypass the VPN encapsulation and redirects traffic outside of the VPN encrypted tunnel, permitting snooping, tampering or eavesdropping of sensitive information. DDoS attacks hijack the accesibility of server or network by flooding the server with traffic. The communication protocol permits standard exchange and specific command line arguments for simulated cyber attacks.
 
+## Layer Interaction
+* Client: Application sends messages to VPN server
+* VPN server: Interprets client application messages and executes accordingly. Either performs an attack (using sim_attack.py if DDoS) or sends message to server.
+* sim_attack: Executes DDoS attack on destination server.
+* Server: Receives message from VPN server and echoes back to client. 
+
 # Client->VPN Server Message Format, VPN Server->Client Message Format & Example Output
 Everything is run through client.py through the message function. If the client types 'tunnelvision' or 'ddos' in the message terminal input, then the VPN server will execute one of these attacks. If the client input message is anything but those two strings, then the message will be echoed back to the client. Client, VPN and server provide messages in the terminal to illustrate the connection process and communicate when connections have been established and whether messages have been received or not (an error message will appear.)
 
 ## No Attack
 
-### client.py output
+### client.py output with Command Line Trace
 ```
 The default interactive shell is now zsh.
 To update your account to use zsh, please run `chsh -s /bin/zsh`.
@@ -33,7 +39,7 @@ server message to client
 ```
 ## TunnelVision-Inspired Attack
 
-### client.py output
+### client.py output with Command Line Trace
 A hacked message is sent back to the client instead of being echoed.
 ```
 For more details, please visit https://support.apple.com/kb/HT208050.
@@ -60,7 +66,7 @@ Received response from server: 'Hacked: 282199385818148038304171235776974967102'
 server message to client
 ```
 
-## DDoS Attack
+## DDoS Attack with Command Line Trace
 I know DDoS Attacks are considered 'illegal' to execute (according to NeuralNine). However, I reduced the thread count to 5 instead of 500 to avoid completely flooding the server. Additionally, I created a fake IP address using a random number generator. 
 
 ### client.py output
