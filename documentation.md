@@ -71,10 +71,10 @@ Received response from server: 'Hacked: 282199385818148038304171235776974967102'
 server message to client
 ```
 
-## DDoS Attack with Command Line Trace
+## DDoS Attack 
 I know DDoS Attacks are considered 'illegal' to execute (according to NeuralNine). However, I reduced the thread count to 5 instead of 500 to avoid completely flooding the server. Additionally, I created a fake IP address using a random number generator. 
 
-### client.py output
+### client.py output with Command Line Trace
 ```
 The default interactive shell is now zsh.
 To update your account to use zsh, please run `chsh -s /bin/zsh`.
