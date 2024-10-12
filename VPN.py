@@ -18,6 +18,7 @@ args = parser.parse_args()
 VPN_IP = args.VPN_IP  # Address to listen on
 VPN_PORT = args.VPN_port  # Port to listen on (non-privileged ports are > 1023)
 
+# obtain info from message sent from client
 def parse_message(message):
 
     message = message.decode("utf-8")
@@ -48,7 +49,6 @@ def parse_message(message):
 # client appropriate error messages.
 
 # def vpn_server():
-
 print(f"VPN starting - listening for connections at IP {VPN_IP} and port {VPN_PORT}")
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as vpn_socket:
     # connect w client
@@ -64,7 +64,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as vpn_socket:
         # print(data)
  
         SERVER_IP, SERVER_PORT, message = parse_message(data)
-
+        # perform tunnelvision attack if user types tunnelvision
         if message == 'tunnelvision':
             print("Starting simulated TunnelVision-esque attack")
             message = f"Hacked: {random.getrandbits(128)}"
@@ -82,12 +82,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as vpn_socket:
                 conn.sendall(server_response)
                 print("server message to client")
             # tunnelvision(SERVER_IP,SERVER_PORT)
+            
+        # performs ddos if user types ddos
         elif message == 'ddos':
-            print("Starting simulated DDOS attack. Please exit if you do not wish to continue")
-
             ddos(SERVER_IP,SERVER_PORT)
         #print("message", message)
         #print("SERVERIP", SERVER_IP)
+
+        # if client doesn't type tunnelvision or ddos then echos message back to client
         else:
         #sever connect
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
