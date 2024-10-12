@@ -8,6 +8,11 @@ This project facilitates message communication between a **malicious** and **fri
 * sim_attack: Executes DDoS attack on destination server.
 * Server: Receives message from VPN server and echoes back to client. 
 
+## Steps
+* First, run the echo-server.py from the command line.
+* Then the VPN.py server
+* Last, run your message through client.py
+
 # Client->VPN Server Message Format, VPN Server->Client Message Format & Example Output
 Everything is run through client.py through the message function. If the client types 'tunnelvision' or 'ddos' in the message terminal input, then the VPN server will execute one of these attacks. If the client input message is anything but those two strings, then the message will be echoed back to the client. Client, VPN and server provide messages in the terminal to illustrate the connection process and communicate when connections have been established and whether messages have been received or not (an error message will appear.)
 
