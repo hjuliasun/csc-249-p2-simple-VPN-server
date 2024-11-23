@@ -8,13 +8,24 @@ This project facilitates message communication between a **malicious** and **fri
 * sim_attack: Executes DDoS attack on destination server.
 * Server: Receives message from VPN server and echoes back to client. 
 
+### Client 
+The client application or client.py operates within the Application Layer to prepare and package the message to send to the VPN server. The Transport Layer is where the client establishes a connection with the VPN server through a user-inputted port number for data transmission. At the Network Layer, the message is routed to the VPN server along the best path determined. 
+
+### VPN 
+In the Network Layer, the VPN receives the message from the client and connects with the server of interest as determined by the client. The VPN extracts the message for processing and determining which action it should take after processing the message in the Transport Layer. Based on the content of the message, the VPN sends instructions to the echo-server.py and sim_attacks.py in the Application Layer.
+
+### Server
+In the Application Layer, the server receives data packets to present meaningful data back to the client. In this case, if the message contains 'ddos' or 'tunnelvision' the server will respond with the attack that has been carried out. Otherwise, the client's message will be echoed back to them. In the Transport Layer, the server responds back to the VPN server to communicate the information to the client. The Network Layer routes the best path for the server's response to the VPN server, which will be forwarded back to the client. 
+
 ## Steps
 * First, run the echo-server.py from the command line.
 * Then the VPN.py server
 * Last, run your message through client.py
 
 # Client->VPN Server Message Format, VPN Server->Client Message Format & Example Output
-Everything is run through client.py through the message function. If the client types 'tunnelvision' or 'ddos' in the message terminal input, then the VPN server will execute one of these attacks. If the client input message is anything but those two strings, then the message will be echoed back to the client. Client, VPN and server provide messages in the terminal to illustrate the connection process and communicate when connections have been established and whether messages have been received or not (an error message will appear.)
+Everything is run through client.py through the message function. If the client types 'tunnelvision' or 'ddos' in the message terminal input, then the VPN server will execute one of these attacks. If the client input message is anything but those two strings, then the message will be echoed back to the client. Client, VPN and server provide messages in the terminal to illustrate the connection process and communicate when connections have been established and whether messages have been received or not (an error message will appear.) The format of client input through the command line is defined as such:
+
+python {client server file: str} --server_IP {IP address: int} --server_port {IP Port Number: int} --message {user input: str}
 
 ## No Attack
 
@@ -43,6 +54,7 @@ Received response from server: 'whats lookin good cookin'
 server message to client
 ```
 ## TunnelVision-Inspired Attack
+Tunnelvision attacks are a network technique that bypass VPN encapsulation, permitting adversarial snooping by forcing target user's traffic outside of the VPN encryped tunnel. Using built-in features of DHCP (Dynamic Host Configuration Protocol), the adversary is able to ensure that the user's transmitted packets are never encrypted by the VPN, which is essentially called decloaking. In order to decloak VPN traffic, the targeted host must accept a DHCP lease from an attacker-controlled server. This allows the DHCP server to run simulataneously with the VPN server, allowing the DHCP configuration to be used as a gateway. As a result, the DHCP sets a route along the VPN user's route table and pushes a route, causing network traffic to be sent over the DHCP server interface instead of the VPN. 
 
 ### client.py output with Command Line Trace
 A hacked message is sent back to the client instead of being echoed.
